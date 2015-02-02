@@ -3,101 +3,110 @@ package shape;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.graphics.Color;
+
 
 public class Circle
 {
 	private static int maxWidth;
 	private static int maxHeight;
-	private int centerX;
-	private int centerY;
+	private float centerX;
+	private float centerY;
 
-	private int x1;
-	private int x2;
-	private int y1;
-	private int y2;
-	private int radius;
+	private float x1;
+	private float x2;
+	private float y1;
+	private float y2;
+	private float radius;
 	private Random generator;
 	static AtomicInteger nextId = new AtomicInteger();
     private long id;
-    private Coords coords;
-    private Coords center;
-    boolean draw;
+    private double shrinkFactor;
+    private int color;
 	public Circle()
 	{
-		radius=60;
 		generator = new Random(); 
+		id=nextId.incrementAndGet();
+		
+		radius= (int) ((Math.random()*(90) ))+80;
+		shrinkFactor=0.8;
+		//shrinkFactor= (double)((generator.nextInt(5)+4))/10;
+		//setRandomRadius();
+		color = Color.argb(255, (generator.nextInt(246)+10), generator.nextInt(256), generator.nextInt(256)); 
 		randomX();
 		randomY();
-		id=nextId.incrementAndGet();
-		coords=new Coords();
-		center= new Coords();
-		draw=true;
+		
 	}
-	public boolean getDraw()
+	public int getColor() {
+		return color;
+	}
+	public double getShrinkFactor() {
+		return shrinkFactor;
+	}
+	public void setShrinkFactor(double shrinkFactor) {
+		this.shrinkFactor = shrinkFactor;
+	}
+	public void setRandomRadius()
 	{
-		return draw;
+		radius=(int) ((Math.random()*(120) ))+20;
+		System.out.println(radius);
 	}
-	public void setDraw(boolean draw)
-	{
-		this.draw=draw;
-	}
-	public int getX1() {
+	
+	public float getX1() {
 		return x1;
 	}
 
-	public int getX2() {
+	public float getX2() {
 		return x2;
 	}
-	public int getY1() {
+	public float getY1() {
 		return y1;
 	}
 
-	public int getY2() {
+	public float getY2() {
 		return y2;
 	}
 
 	
 	public void randomX()
 	{
-		centerX = generator.nextInt(maxWidth- (radius*2)) + radius*2;
+		centerX = (int) (Math.random() * ( (maxWidth- (radius*4)) )) + radius*2;
 		x1=centerX-radius;
 		x2=centerX+radius;
 	}
 	
 	public void randomY()
 	{
-		centerY = generator.nextInt(maxHeight -(radius*2)) + radius*2;
+		centerY = (int) (Math.random()*( (maxHeight -(radius*4)))) +radius*2;
 		y1=centerY-radius;
 		y2=centerY+radius;
 	}
-	public int getCenterX() {
+	public float getCenterX() {
 		return centerX;
 	}
 
 	public void setCenterX(int centerX) {
 		this.centerX = centerX;
-		center.setX(centerX);
 	
 	}
 	
 	public void setCenterY(int centerY) {
 		this.centerY = centerY;
-		center.setY(centerY);
 	
 	}
 
-	public int getCentertY() {
+	public float getCentertY() {
 		return centerY;
 	}
 
 
 
-	public int getRadius() {
+	public float getRadius() {
 		return radius;
 	}
 
-	public void setRadius(int radius) {
-		this.radius = radius;
+	public void setRadius(float d) {
+		this.radius = d;
 	}
 
 	public static int getMaxWidth() {
@@ -120,21 +129,7 @@ public class Circle
 		return id;
 	}
 
-	public Coords getCenter()
-	{
-		return center;
-	}
-
-
-	public Coords getCoords() {
-		return coords;
-	}
-
-
-
-	public void setCoords(Coords coords) {
-		this.coords = coords;
-	}
+	
 
 
 }
