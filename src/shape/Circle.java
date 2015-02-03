@@ -6,10 +6,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import android.graphics.Color;
 
 
-public class Circle
+public class Circle extends Shape
 {
-	private static int maxWidth;
-	private static int maxHeight;
+
 	private float centerX;
 	private float centerY;
 

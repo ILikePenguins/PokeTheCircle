@@ -1,5 +1,7 @@
 package view;
 
+import android.os.SystemClock;
+
 public class ShrinkCircles implements Runnable
 {
 
@@ -12,7 +14,7 @@ public class ShrinkCircles implements Runnable
 	{
 		this.cv=cv;
 		run=true;
-		sleepTime=3000;
+		sleepTime=950;
 	}
 	public void setRun(boolean run)
 	{
@@ -23,7 +25,7 @@ public class ShrinkCircles implements Runnable
 	}
 	public void setSleepTime(int sleepTime)
 	{
-		if(sleepTime>1500)
+		if(sleepTime>200)
 			this.sleepTime = sleepTime;
 	}
 	
@@ -31,13 +33,12 @@ public class ShrinkCircles implements Runnable
 	{
 		while(run)
 		{
-			cv.postInvalidate();
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			System.out.println("invalidated");
+			cv.setShrink(true);
+			cv.postInvalidate();
+			SystemClock.sleep(sleepTime);
+			
+			
 		}
 	}
 }
