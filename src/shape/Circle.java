@@ -12,7 +12,7 @@ public class Circle extends Shape
 	private float x2;
 	private float y1;
 	private float y2;
-	static int minSize=40;
+	static int minSize=60;
 	static int maxSize=90;
 	private float radius;
 	
@@ -21,7 +21,7 @@ public class Circle extends Shape
 		id = nextId.incrementAndGet();
 		setRandomColor();
 		setRandomRadius();
-		shrinkFactor = 0.8;
+		shrinkFactor = 0.9;
 		type=1;
 		// shrinkFactor= (double)((generator.nextInt(5)+4))/10;
 		// setRandomRadius();
@@ -40,7 +40,7 @@ public class Circle extends Shape
 	public void randomX()
 	{
 		// get random center x coordinate within bounds of users device
-		centerX = (int) (Math.random() * ( (maxWidth- (radius*4)) )) + radius*2;
+		centerX = (int) (Math.random() * ( (maxWidth- (maxSize*4)) )) + maxSize*2;
 		x1=centerX-radius;
 		x2=centerX+radius;
 	}
@@ -48,7 +48,7 @@ public class Circle extends Shape
 	public void randomY()
 	{
 		// get random center y coordinate within bounds of users device
-		centerY = (int) (Math.random()*( (maxHeight -(radius*4)))) +radius*2;
+		centerY = (int) (Math.random()*( (maxHeight -(maxSize*4)))) +maxSize*2;
 		y1=centerY-radius;
 		y2=centerY+radius;
 	}

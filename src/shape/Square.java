@@ -9,12 +9,25 @@ public class Square extends Shape
 
 	private float x1;
 	private float y1;
+
+
+
+
 	private int length;
 	
 	public Square()
 	{
 		length=35;
 		randomCoordinates();
+		type=2;
+	}
+	
+	public void setX1(float x1) {
+		this.x1 = x1;
+	}
+
+	public void setY1(float y1) {
+		this.y1 = y1;
 	}
 	
 	public void setLength(int length) {
@@ -38,16 +51,23 @@ public class Square extends Shape
 	
 	public boolean isPoked(float x, float y)
 	{
-		if(x>=x1 && x<=x1+length &&y>=y1 &&y<=y1+length)
+		//System.out.println("poked: "+x+","+y);
+		if( (x>=x1 && x<=(x1+length)) && (y>=(y1-length) &&y<=y1) )
+		{
+			
 			return true;
+		}
 		
 		return false;
 	}
+	
+
 	
 	public void draw(Canvas canvas)
 	{
 		paint.setColor(Color.WHITE);
 		canvas.drawRect(x1,x1,y1,y1,paint);
+		//System.out.println("coords:"+x1+","+y1);
 		
 	}
 }

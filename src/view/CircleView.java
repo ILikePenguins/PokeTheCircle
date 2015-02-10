@@ -1,15 +1,14 @@
 package view;
 
+import game.Game;
+
 import java.util.ArrayList;
 
-import com.example.pokethecircle.GameOverActivity;
 
 import shape.Circle;
 import shape.Shape;
 import shape.Square;
-import sound.Sound;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,29 +20,22 @@ import android.view.View;
 public class CircleView extends View  
 {
 	private ArrayList<Shape> shapes= new ArrayList<Shape>();
-	private ShrinkCircles sc;
-	private boolean shrink;
+	private Game game;
+    public Game getGame() {
+		return game;
+	}
 
-	private int score;
-	
-	private Sound sound;
-    public CircleView(Context context)
+	public CircleView(Context context)
     {
          super(context);
-         
+         game=new Game(this);
          //bkg color
          setBackgroundColor(Color.BLACK);
         
          initCircleList(3);
         
          setOnTouchListener(new TouchListener());
-         //shrink thread
-         sc=new ShrinkCircles(this);
-         Thread shrinkThread = new Thread(sc);
-         shrinkThread.start();
-         
-         shrink=true;
-         score=0;
+
        
     }
     
@@ -58,7 +50,7 @@ public class CircleView extends View
     	{
     		shapes.add(new Circle());
     	}
-    	//shapes.add(new Square());
+
     }
 
     protected void onDraw(Canvas canvas) 
@@ -79,7 +71,7 @@ public class CircleView extends View
 	    	  s.draw(canvas);
 		    	  
 	      } 
-	      shrink=true;
+	      game.setShrink(true);
       }
    }
    
@@ -89,12 +81,10 @@ public class CircleView extends View
  	  {
 		   //circle got too small, end game
      	  System.out.println("gameover");
-     	  //stop the shrink thread
-     	  sc.setRun(false);
-     	  //circle got too small, game is over
-     	  gameOver();
+     	  game.gameOver();
+
  	  }
- 	  else if(shrink)
+ 	  else if(game.isShrink())
 	    	  c.setRadius((float) (c.getRadius()*c.getShrinkFactor()));
 
    }
@@ -110,7 +100,7 @@ public class CircleView extends View
 
 			    // get masked (not specific to a pointer) action
 			    int maskedAction = me.getActionMasked();
-			    int pointerId = me.getPointerId(pointerIndex);
+			    //int pointerId = me.getPointerId(pointerIndex);
 			    //me.getX(pointerId);
 				switch (maskedAction) 
 				{
@@ -119,7 +109,7 @@ public class CircleView extends View
 				    case MotionEvent.ACTION_POINTER_DOWN: //2nd finger
 				    {
 				    	//check if a shape was poked
-				      poked(me.getX(pointerIndex),me.getY(pointerIndex));
+				      shapes=game.poked(me.getX(pointerIndex),me.getY(pointerIndex),shapes);
 				      break;
 				    }
 				    case MotionEvent.ACTION_UP:
@@ -129,71 +119,14 @@ public class CircleView extends View
 			return false;
 		}
     }
-    
-    public void poked(float x, float y)
-    {
-    	  sound= new Sound(this.getContext());
-    	//sound= new Sound(this.getContext());
-    	for(Shape s: shapes)
-    	{
-    		if(s.isPoked(x, y) && s.getType()==2)
-    		{
-    			System.out.println("poked a square");
-    		}
-    		
-    		//ensure its a circle getting poked
-
-    		if(s.isPoked(x,y) && s.getType()==1)
-    		{
-    			//playsound if its loaded
-    			sound.isLoaded();
-    			     
-    			System.out.println("poked a circle!");
-    			//remove the clicked circle, and add a new one
-    			shapes.remove(s);
-    			shapes.add(new Circle());
-    			//turn off shrinking of circles
-    			shrink=false;
-    			score++;
-    			
-    			if(score%15==0)
-    			{
-    				//make circles shrink faster
-    				sc.setSleepTime(sc.getSleepTime()-100);
-    			}
-    			if(score%20==0)
-    			{
-    				//add another circle to the game
-    				shapes.add(new Circle());
-    			}
-    			//redraw
-    			invalidate();
-    			break;
-    		}
-    	}
-    }
-    
-    public void gameOver()
-    {
-    	Intent gameOver = new Intent(this.getContext(),GameOverActivity.class);
-    	gameOver.putExtra("score",score+"");
-    	System.out.println("score: "+ score);
-      	this.getContext().startActivity(gameOver);
-    }
-    
-	public boolean isShrink() {
-		return shrink;
-	}
-
-	public void setShrink(boolean shrink) {
-		this.shrink = shrink;
-	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) 
 	{
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) 
 	    {
-	    	sc.setRun(false);
+	    	game.getSc().setRun(false);
+	    	game.getAnimate().setRun(false);
+	    	
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}

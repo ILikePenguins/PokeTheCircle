@@ -19,6 +19,7 @@ public abstract class  Shape
 	 long id;
 	 int type;
 	 protected Paint paint = new Paint();
+	 
 	public int getType() {
 		return type;
 	}
