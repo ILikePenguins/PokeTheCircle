@@ -18,8 +18,11 @@ public class Sound
 	{
 		
 	    soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+	    //set up listener
 	    soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener());
+	    //load sound
 	    soundID = soundPool.load(c, R.raw.boop, 1);
+	    //needed to get users current sound level
 	    am = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
 	}
 	
@@ -28,17 +31,30 @@ public class Sound
 		 public void onLoadComplete(final SoundPool soundPool, int sampleId,
 		          int status)
 		 {
-			 	System.out.println("loaded!!!");
 		        loaded = true;
+		        int volume_level=0;
+		        switch( am.getRingerMode() )
+		        {
+		        case AudioManager.RINGER_MODE_NORMAL:
+		        	//get current volume level of user
+		        	volume_level = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+		           break;
+		        case AudioManager.RINGER_MODE_SILENT:
+		        case AudioManager.RINGER_MODE_VIBRATE:
+		        	volume_level=0;
+		           break;
+		        }
 		        
-		        int volume_level= am.getStreamVolume(AudioManager.STREAM_MUSIC);
+		        
+		        //play sound
 		        soundPool.play(soundID, volume_level, volume_level, 1, 0, 1f);
+		        
 		        new Thread(new Runnable()
 		        {
 	        	     public void run()
 	        	     {
 	        	         try 
-	        	         {
+	        	         {		//release resources after sound plays
 	        	        	 	Thread.sleep(500);
 	        	                soundPool.release();
 	        	         } 
@@ -56,7 +72,7 @@ public class Sound
 		return loaded;
 	}
 		
-	}
+}
 	
 
 

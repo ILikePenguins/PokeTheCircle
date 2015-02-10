@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import com.example.pokethecircle.GameOverActivity;
 
 import shape.Circle;
+import shape.Shape;
+import shape.Square;
 import sound.Sound;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -19,8 +20,7 @@ import android.view.View;
 
 public class CircleView extends View  
 {
-	private Paint paint = new Paint();
-	private ArrayList<Circle> circles= new ArrayList<Circle>();
+	private ArrayList<Shape> shapes= new ArrayList<Shape>();
 	private ShrinkCircles sc;
 	private boolean shrink;
 
@@ -30,8 +30,8 @@ public class CircleView extends View
     public CircleView(Context context)
     {
          super(context);
-         //bkg color
          
+         //bkg color
          setBackgroundColor(Color.BLACK);
         
          initCircleList(3);
@@ -42,59 +42,62 @@ public class CircleView extends View
          Thread shrinkThread = new Thread(sc);
          shrinkThread.start();
          
-         
-         
          shrink=true;
          score=0;
+       
     }
     
     public void initCircleList(int x)
     {
     	//get screen size of device
     	DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
-	    Circle.setMaxHeight(metrics.heightPixels);
-        Circle.setMaxWidth(metrics.widthPixels);
+	    Shape.setMaxHeight(metrics.heightPixels);
+        Shape.setMaxWidth(metrics.widthPixels);
         //initialize circles
     	for(int i=0;i<x;i++)
     	{
-    		circles.add(new Circle());
+    		shapes.add(new Circle());
     	}
+    	//shapes.add(new Square());
     }
 
     protected void onDraw(Canvas canvas) 
     {
-    	//draw circle
       super.onDraw(canvas);
-    
-      if(circles.size()>0)
+
+      if(shapes.size()>0)
       {  
-	      for(Circle c :circles)
+	      for(Shape s :shapes)
 	      {
-	    	  paint.setColor(c.getColor());
-	    	  
-	    	  if(c.getRadius()<15)
+	    	  if(s instanceof  Circle)
 	    	  {
-	    		  //circles.remove(c);
-	    		  
-	        	  System.out.println("gameover");
-	        	  sc.setRun(false);
-	        	  gameOver();
+	    		  //set up circle parameters
+	    		  initCircle((Circle)s);
+	    		
 	    	  }
-	    	  else if(shrink)
-	    	  {
-		    	  c.setRadius((float) (c.getRadius()*c.getShrinkFactor()));
-		          
-		          //0-120 when radius is 60
-	    	  }
-	    	  canvas.drawCircle(c.getCenterX(),c.getCentertY() , c.getRadius(), paint);
-	    	 // canvas.drawRect(left, top, right, bottom, paint)
-	    	  //System.out.println(c.getCenterX()+","+c.getCentertY()+"  "+c.getRadius());
-	    	  
+	    	  //draw shapes
+	    	  s.draw(canvas);
+		    	  
 	      } 
 	      shrink=true;
       }
    }
-    
+   
+   public void initCircle(Circle c)
+   {
+	   if(c.getRadius()<15)
+ 	  {
+		   //circle got too small, end game
+     	  System.out.println("gameover");
+     	  //stop the shrink thread
+     	  sc.setRun(false);
+     	  //circle got too small, game is over
+     	  gameOver();
+ 	  }
+ 	  else if(shrink)
+	    	  c.setRadius((float) (c.getRadius()*c.getShrinkFactor()));
+
+   }
     
     public class TouchListener implements OnTouchListener
     {
@@ -102,23 +105,21 @@ public class CircleView extends View
 		public boolean onTouch(View v, MotionEvent me)
 		{
 			
-			//multitouch...hopefully
+			//multi-touch...hopefully
 			  int pointerIndex = me.getActionIndex();
 
 			    // get masked (not specific to a pointer) action
 			    int maskedAction = me.getActionMasked();
-				
-				System.out.println("boop");
-				//check if a circle was poked
-				
-				
+			    int pointerId = me.getPointerId(pointerIndex);
+			    //me.getX(pointerId);
 				switch (maskedAction) 
 				{
 
-				    case MotionEvent.ACTION_DOWN:
-				    case MotionEvent.ACTION_POINTER_DOWN: 
+				    case MotionEvent.ACTION_DOWN: //1st finger
+				    case MotionEvent.ACTION_POINTER_DOWN: //2nd finger
 				    {
-				      pokeCircle(me.getX(pointerIndex),me.getY(pointerIndex));
+				    	//check if a shape was poked
+				      poked(me.getX(pointerIndex),me.getY(pointerIndex));
 				      break;
 				    }
 				    case MotionEvent.ACTION_UP:
@@ -127,25 +128,31 @@ public class CircleView extends View
 				}
 			return false;
 		}
-    	
     }
-    public void pokeCircle(float x, float y)
+    
+    public void poked(float x, float y)
     {
-    	 Sound sound= new Sound(this.getContext());
-    	for(Circle c: circles)
+    	  sound= new Sound(this.getContext());
+    	//sound= new Sound(this.getContext());
+    	for(Shape s: shapes)
     	{
-    		if(x>=c.getX1() && x<=c.getX2() &&y>=c.getY1()&&y<=c.getY2())
+    		if(s.isPoked(x, y) && s.getType()==2)
     		{
-    			
-    		    
-    			 if (sound.isLoaded()) {
-    				 System.out.println("soooouuund");
-    			      }
+    			System.out.println("poked a square");
+    		}
+    		
+    		//ensure its a circle getting poked
+
+    		if(s.isPoked(x,y) && s.getType()==1)
+    		{
+    			//playsound if its loaded
+    			sound.isLoaded();
+    			     
     			System.out.println("poked a circle!");
-    			//remove the clicked circle, and redraw
-    			circles.remove(c);
-    			circles.add(new Circle());
-    			
+    			//remove the clicked circle, and add a new one
+    			shapes.remove(s);
+    			shapes.add(new Circle());
+    			//turn off shrinking of circles
     			shrink=false;
     			score++;
     			
@@ -157,14 +164,13 @@ public class CircleView extends View
     			if(score%20==0)
     			{
     				//add another circle to the game
-    				circles.add(new Circle());
+    				shapes.add(new Circle());
     			}
-    			
+    			//redraw
     			invalidate();
     			break;
     		}
     	}
-    	
     }
     
     public void gameOver()
@@ -183,13 +189,12 @@ public class CircleView extends View
 		this.shrink = shrink;
 	}
 	
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
+	{
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) 
 	    {
 	    	sc.setRun(false);
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
-
- 
 }

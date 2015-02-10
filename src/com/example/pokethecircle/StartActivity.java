@@ -21,7 +21,7 @@ public class StartActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
-		interstitialAds();
+		//interstitialAds();
 
 		Button startButton = (Button) findViewById(R.id.btnStart);
 		startButton.setOnClickListener(new StartListener());

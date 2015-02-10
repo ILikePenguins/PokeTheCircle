@@ -1,10 +1,6 @@
 package shape;
 
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import android.graphics.Color;
-
+import android.graphics.Canvas;
 
 public class Circle extends Shape
 {
@@ -16,59 +12,34 @@ public class Circle extends Shape
 	private float x2;
 	private float y1;
 	private float y2;
+	static int minSize=40;
+	static int maxSize=90;
 	private float radius;
-	private Random generator;
-	static AtomicInteger nextId = new AtomicInteger();
-    private long id;
-    private double shrinkFactor;
-    private int color;
+	
 	public Circle()
 	{
-		generator = new Random(); 
-		id=nextId.incrementAndGet();
-		
-		radius= (int) ((Math.random()*(90) ))+80;
-		shrinkFactor=0.8;
-		//shrinkFactor= (double)((generator.nextInt(5)+4))/10;
-		//setRandomRadius();
-		color = Color.argb(255, (generator.nextInt(246)+10), generator.nextInt(256), generator.nextInt(256)); 
+		id = nextId.incrementAndGet();
+		setRandomColor();
+		setRandomRadius();
+		shrinkFactor = 0.8;
+		type=1;
+		// shrinkFactor= (double)((generator.nextInt(5)+4))/10;
+		// setRandomRadius();
+
 		randomX();
 		randomY();
 		
 	}
-	public int getColor() {
-		return color;
-	}
-	public double getShrinkFactor() {
-		return shrinkFactor;
-	}
-	public void setShrinkFactor(double shrinkFactor) {
-		this.shrinkFactor = shrinkFactor;
-	}
+
 	public void setRandomRadius()
 	{
-		radius=(int) ((Math.random()*(120) ))+20;
-		System.out.println(radius);
+		radius = (int) ((Math.random() * (maxSize))) + minSize;
+		//System.out.println(radius);
 	}
-	
-	public float getX1() {
-		return x1;
-	}
-
-	public float getX2() {
-		return x2;
-	}
-	public float getY1() {
-		return y1;
-	}
-
-	public float getY2() {
-		return y2;
-	}
-
 	
 	public void randomX()
 	{
+		// get random center x coordinate within bounds of users device
 		centerX = (int) (Math.random() * ( (maxWidth- (radius*4)) )) + radius*2;
 		x1=centerX-radius;
 		x2=centerX+radius;
@@ -76,6 +47,7 @@ public class Circle extends Shape
 	
 	public void randomY()
 	{
+		// get random center y coordinate within bounds of users device
 		centerY = (int) (Math.random()*( (maxHeight -(radius*4)))) +radius*2;
 		y1=centerY-radius;
 		y2=centerY+radius;
@@ -86,20 +58,15 @@ public class Circle extends Shape
 
 	public void setCenterX(int centerX) {
 		this.centerX = centerX;
-	
 	}
 	
 	public void setCenterY(int centerY) {
 		this.centerY = centerY;
-	
 	}
 
 	public float getCentertY() {
 		return centerY;
 	}
-
-
-
 	public float getRadius() {
 		return radius;
 	}
@@ -107,28 +74,22 @@ public class Circle extends Shape
 	public void setRadius(float d) {
 		this.radius = d;
 	}
-
-	public static int getMaxWidth() {
-		return maxWidth;
-	}
-
-	public static void setMaxWidth(int maxWidth) {
-		Circle.maxWidth = maxWidth;
-	}
-
-	public static int getMaxHeight() {
-		return maxHeight;
-	}
-
-	public static void setMaxHeight(int maxHeight) {
-		Circle.maxHeight = maxHeight;
-	}
-	public long getID()
-	{
-		return id;
-	}
-
 	
-
+	public boolean isPoked(float x, float y)
+	{
+		if(x>=x1 && x<=x2 &&y>=y1 &&y<=y2)
+			return true;
+		
+		return false;
+	}
+	
+	public void draw(Canvas canvas)
+	{
+		paint.setColor(getColor());
+		canvas.drawCircle(centerX,
+				centerY,
+				radius, paint);
+		
+	}
 
 }
