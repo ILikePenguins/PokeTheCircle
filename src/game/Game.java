@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import animate.Animate;
 
 import com.example.pokethecircle.GameOverActivity;
 
@@ -11,7 +12,6 @@ import shape.Circle;
 import shape.Shape;
 import shape.Square;
 import sound.Sound;
-import view.Animate;
 import view.CircleView;
 import view.ShrinkCircles;
 
@@ -111,8 +111,10 @@ public class Game
     
     public void gameOver()
     {
+    	if(animate.isRun())
+    		animate.setRun(false);
+    	
     	sc.setRun(false);
-    	animate.setRun(false);
     	Intent gameOver = new Intent(cv.getContext(),GameOverActivity.class);
     	gameOver.putExtra("score",score+"");
     	System.out.println("score: "+ score);
