@@ -7,17 +7,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.pokethecircle.StartActivity" 
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/start">
 
-    <TextView
-        android:id="@+id/tvHowTo"
+    <Button
+        android:id="@+id/btnHowTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:text=" Boop!"
-        android:textSize="24sp" />
+        android:layout_alignParentRight="true"
+        android:text="How To Play" />
 
     <Button
         android:id="@+id/btnStart"
@@ -25,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="27dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="0dp"
         android:text="Start" />
 
 </RelativeLayout>

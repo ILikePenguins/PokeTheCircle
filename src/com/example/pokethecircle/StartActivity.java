@@ -26,12 +26,15 @@ public class StartActivity extends ActionBarActivity
 		Button startButton = (Button) findViewById(R.id.btnStart);
 		startButton.setOnClickListener(new StartListener());
 
-		TextView score = (TextView) findViewById(R.id.tvHowTo);
-		score.setText("Many circles will appear on the screen,"
-				+ "\ntry to poke them before they shrink and disappear!"
-				+ "\nBe careful though, as time goes on,"
-				+ "\nthe circles will call their circle buddies and shrink "
-				+ "even faster." + "\n\nCan you poke them all?");
+		Button howToButton = (Button) findViewById(R.id.btnHowTo);
+		howToButton.setOnClickListener(new HowToListener());
+		
+		//TextView score = (TextView) findViewById(R.id.tvHowTo);
+//		score.setText("Many circles will appear on the screen,"
+//				+ "\ntry to poke them before they shrink and disappear!"
+//				+ "\nBe careful though, as time goes on,"
+//				+ "\nthe circles will call their circle buddies and shrink "
+//				+ "even faster." + "\n\nCan you poke them all?");
      	}
     
     public void interstitialAds()
@@ -78,6 +81,16 @@ public class StartActivity extends ActionBarActivity
     	    {
     		  Intent gameIntent = new Intent(StartActivity.this,GameActivity.class);
   	      	  startActivity(gameIntent);
+    	    }
+    }
+    
+    class HowToListener implements OnClickListener
+    {
+
+    	  public void onClick(View v)
+    	    {
+    		  Intent howToIntent = new Intent(StartActivity.this,HowToPlayActivity.class);
+  	      	  startActivity(howToIntent);
     	    }
     }
   

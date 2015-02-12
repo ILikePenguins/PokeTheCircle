@@ -2,34 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/over">
 
     <Button
         android:id="@+id/btnPlayAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="160dp"
+        android:layout_above="@+id/tvHighScore"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="22dp"
         android:text="Play Again?" />
 
     <TextView
         android:id="@+id/tvGameOver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnPlayAgain"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:text="Game Over" />
+        android:layout_alignRight="@+id/btnPlayAgain"
+        android:layout_marginTop="47dp"
+        android:text="Game Over"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/tvHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="21dp"
+        android:text="highscore"
+        android:textSize="32sp" />
 
     <TextView
         android:id="@+id/tvFinalScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGameOver"
-        android:layout_marginTop="46dp"
-        android:layout_toLeftOf="@+id/tvGameOver"
-        android:text="" />
+        android:layout_alignLeft="@+id/tvGameOver"
+        android:layout_centerVertical="true"
+        android:text=""
+        android:textSize="30sp" />
 
 </RelativeLayout>
