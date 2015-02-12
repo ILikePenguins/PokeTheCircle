@@ -23,7 +23,8 @@ public class Game
 	private boolean shrink;
 	private ShrinkCircles sc;
 	private Animate animate;
-
+	private Level level;
+	
 	public Game(CircleView cv)
 	{
 		this.cv=cv;
@@ -31,10 +32,16 @@ public class Game
 		sc=new ShrinkCircles(cv);
 	    Thread shrinkThread = new Thread(sc);
 	    shrinkThread.start();
-	    
-	   
+	    animate=new Animate(cv);
 	}
-	
+	public Level getLevel() {
+		return level;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
 	public Animate getAnimate() {
 		return animate;
 	}
@@ -73,7 +80,6 @@ public class Game
     			//playsound if its loaded
     			sound.isLoaded();
     			     
-    			//System.out.println("poked a circle!");
     			//remove the clicked circle, and add a new one
     			shapes.remove(s);
     			shapes.add(new Circle());
@@ -94,9 +100,10 @@ public class Game
     			
     			if(score==30)
     			{
+    				//move square back and forth
     		    	Square square=new Square();
     		    	shapes.add(square);
-    		    	animate=new Animate(cv,square);
+    		    	animate.setSquare(square);
     		 	    Thread animateThread = new Thread(animate);
     		 	    animateThread.start();
     			}
@@ -111,10 +118,12 @@ public class Game
     
     public void gameOver()
     {
+    	//stop running threads
     	if(animate.isRun())
     		animate.setRun(false);
-    	
     	sc.setRun(false);
+    	
+    	//start game over activity
     	Intent gameOver = new Intent(cv.getContext(),GameOverActivity.class);
     	gameOver.putExtra("score",score+"");
     	System.out.println("score: "+ score);

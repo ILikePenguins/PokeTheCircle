@@ -45,7 +45,7 @@ public abstract class  Shape
 	}
 
 	public static void setMaxHeight(int maxHeight) {
-		Shape.maxHeight = maxHeight;
+		Shape.maxHeight = maxHeight-100;
 	}
 	public long getID()
 	{

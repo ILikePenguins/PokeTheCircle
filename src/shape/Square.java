@@ -9,10 +9,6 @@ public class Square extends Shape
 
 	private float x1;
 	private float y1;
-
-
-
-
 	private int length;
 	
 	public Square()
@@ -51,13 +47,10 @@ public class Square extends Shape
 	
 	public boolean isPoked(float x, float y)
 	{
-		//System.out.println("poked: "+x+","+y);
 		if( (x>=x1 && x<=(x1+length)) && (y>=(y1-length) &&y<=y1) )
 		{
-			
 			return true;
 		}
-		
 		return false;
 	}
 	

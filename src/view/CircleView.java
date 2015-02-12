@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import shape.Circle;
 import shape.Shape;
-import shape.Square;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -21,9 +20,6 @@ public class CircleView extends View
 {
 	private ArrayList<Shape> shapes= new ArrayList<Shape>();
 	private Game game;
-    public Game getGame() {
-		return game;
-	}
 
 	public CircleView(Context context)
     {
@@ -33,11 +29,13 @@ public class CircleView extends View
          setBackgroundColor(Color.BLACK);
         
          initCircleList(3);
-        
          setOnTouchListener(new TouchListener());
-
-       
     }
+	
+	 public Game getGame() 
+	 {
+			return game;
+	 }
     
     public void initCircleList(int x)
     {
@@ -50,7 +48,6 @@ public class CircleView extends View
     	{
     		shapes.add(new Circle());
     	}
-
     }
 
     protected void onDraw(Canvas canvas) 
@@ -64,25 +61,22 @@ public class CircleView extends View
 	    	  if(s instanceof  Circle)
 	    	  {
 	    		  //set up circle parameters
-	    		  initCircle((Circle)s);
-	    		
+	    		  checkCircleSize((Circle)s);
 	    	  }
 	    	  //draw shapes
 	    	  s.draw(canvas);
-		    	  
 	      } 
 	      game.setShrink(true);
       }
    }
    
-   public void initCircle(Circle c)
+   public void checkCircleSize(Circle c)
    {
 	   if(c.getRadius()<15)
  	  {
 		   //circle got too small, end game
      	  System.out.println("gameover");
      	  game.gameOver();
-
  	  }
  	  else if(game.isShrink())
 	    	  c.setRadius((float) (c.getRadius()*c.getShrinkFactor()));
@@ -124,8 +118,10 @@ public class CircleView extends View
 	{
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) 
 	    {
+	    	//stop running threads
 	    	game.getSc().setRun(false);
-	    	game.getAnimate().setRun(false);
+	    	if(game.getAnimate().isRun())
+	    		game.getAnimate().setRun(false);
 	    	
 	    }
 	    return super.onKeyDown(keyCode, event);
