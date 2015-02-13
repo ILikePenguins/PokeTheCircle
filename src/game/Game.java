@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import animate.Animate;
+import animate.ShrinkCircles;
 
 import com.example.pokethecircle.GameOverActivity;
 
@@ -13,7 +14,6 @@ import shape.Shape;
 import shape.Square;
 import sound.Sound;
 import view.CircleView;
-import view.ShrinkCircles;
 
 public class Game 
 {
@@ -97,23 +97,23 @@ public class Game
     				//make circles shrink faster
     				sc.setSleepTime(sc.getSleepTime()-100);
     			}
-    			if(score%20==0)
+    			if(score%25==0)
     			{
     				//add another circle to the game
     				shapes.add(new Circle());
     			}
     			
-//    			if(score==3)
-//    			{
-//    				addSquare(0);
-//
-//    			}
-//    			if(score==5)
-//    			{
-//    				addSquare(1);
-//    			}
-    			
     			if(score==35)
+    			{
+    				addSquare(0);
+
+    			}
+    			if(score==70)
+    			{
+    				addSquare(1);
+    			}
+    			
+    			if(score==90)
     			{
     				addSquare(2);
     			}

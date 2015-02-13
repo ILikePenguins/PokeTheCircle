@@ -63,8 +63,8 @@ public void setDirection(int direction) {
 		this.square=square;
 		 square.setX1(0);
 		 square.setY1(55);
-		 endx=Shape.getMaxWidth()-35;
-		 endy=Shape.getMaxWidth();
+		 endx=Shape.getMaxWidth()-square.getLength();
+		 endy=Shape.getMaxHeight()-square.getLength();
 	}
 	
 
@@ -79,7 +79,7 @@ public void setDirection(int direction) {
 	public void moveForwad()
 	{
 		//System.out.println("x1: " +square.getX1()+" end:"+endx);
-		while(square.getX1()<endx &&run)
+		while( (square.getX1()<endx && square.getY1()<endy) &&run)
 		{
 			//System.out.println("forward");
 			switch(direction)
@@ -110,7 +110,8 @@ public void setDirection(int direction) {
 	
 	public void moveBack()
 	{
-		while(square.getX1()>0 && run)
+		System.out.println("back");
+		while( (square.getX1()>0 &&square.getY1()>0) && run)
 		{
 			//System.out.println("back");
 			switch(direction)
