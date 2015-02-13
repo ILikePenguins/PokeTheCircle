@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:background="@drawable/bkg">
 
-    <TextView
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="106dp"
+        android:src="@drawable/circles_s" />
+
+    
+      <TextView
         android:id="@+id/tvExplain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,6 +23,7 @@
         android:layout_marginLeft="39dp"
         android:layout_marginTop="36dp"
         android:textSize="32sp"
+        android:textColor="#ffffff"
         android:text="" />
 
     <TextView
@@ -20,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnFw"
         android:layout_alignLeft="@+id/tvExplain"
-        android:layout_marginBottom="66dp"
+        android:layout_marginBottom="75dp"
         android:textSize="32sp"
         android:layout_alignParentBottom="true"
+        android:textColor="#ffffff"
         android:text="" />
 
     <ImageButton
@@ -47,10 +60,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/btnFw"
-        android:layout_marginTop="14dp"
+        android:layout_centerVertical="true"
         android:visibility="invisible"
-        android:layout_alignParentBottom="true"
         android:text="Play" />
-
+    
+    
 </RelativeLayout>

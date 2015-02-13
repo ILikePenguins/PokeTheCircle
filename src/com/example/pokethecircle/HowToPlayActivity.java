@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HowToPlayActivity extends Activity
@@ -22,25 +23,33 @@ public class HowToPlayActivity extends Activity
 	ImageButton backButton;
 	ImageButton nextButton;
 	Button playButton;
+	ImageView image;
 	  protected void onCreate(Bundle savedInstanceState)
 	    {
 			super.onCreate(savedInstanceState);
 
 			setContentView(R.layout.how_to_play);
 			
+			//explanations
 			exp="Circles will appear all over the screen," +
 					"poke them as fast you can!";
 			exp2="The Circles will shrink over time." +
 					"Once a circle gets too small, its game over.";
 			exp3="A square will appear at some point to block" +
-					" your pokes on the circles. If you poke one, the game ends";
-			tip="Try to poke the smallest one first";
+					" your pokes. If you poke one, the game ends";
+			//tips
+			tip="Tip: Try to poke the smallest one first";
 			tip2="How many can you poke?";
-		
+			
+			//textviews
 			tvHowTo = (TextView) findViewById(R.id.tvExplain);
 			tvTips = (TextView) findViewById(R.id.tvTip);
 			tvHowTo.setText(exp);
 			
+			//imageview
+			image = (ImageView) findViewById(R.id.ivImage);
+			
+			//buttons
 			nextButton = (ImageButton) findViewById(R.id.btnFw);
 			nextButton.setOnClickListener(new NextListener());
 			
@@ -58,6 +67,7 @@ public class HowToPlayActivity extends Activity
 
 	    	  public void onClick(View v)
 	    	    {
+	    		  //go back to start screen
 	    		  Intent playIntent = new Intent(HowToPlayActivity.this,GameActivity.class);
 	  	      	  startActivity(playIntent);
 	    	    }
@@ -99,6 +109,7 @@ public class HowToPlayActivity extends Activity
 	  
 	  public void page()
 	  {
+		  //change text and imagec
 		  switch(count)
 		  {
 		  	case 0:
@@ -112,6 +123,7 @@ public class HowToPlayActivity extends Activity
 		  	case 2:
 		  		tvHowTo.setText(exp3);
 		  		tvTips.setText(tip2);
+		  		image.setImageResource(R.drawable.square);
 		  		break;
 		  }
 	  }
