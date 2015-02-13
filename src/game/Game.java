@@ -103,19 +103,19 @@ public class Game
     				shapes.add(new Circle());
     			}
     			
-    			if(score==30)
-    			{
-    				addSquare();
-//    				//move square back and forth
-//    		    	Square square=new Square();
-//    		    	shapes.add(square);
-//    		    	animate.setSquare(square);
-//    		 	    Thread animateThread = new Thread(animate);
-//    		 	    animateThread.start();
-    			}
+//    			if(score==3)
+//    			{
+//    				addSquare(0);
+//
+//    			}
+//    			if(score==5)
+//    			{
+//    				addSquare(1);
+//    			}
+    			
     			if(score==35)
     			{
-    				addSquare();
+    				addSquare(2);
     			}
     			
     			//redraw
@@ -127,13 +127,21 @@ public class Game
 		return shapes;
     }
     
-    public void addSquare()
+    public void addSquare(int direction)
     {
     	//move square back and forth
-    	Square square=new Square();
+    	Square square=null;
+    	if(direction==0 || direction ==1 )
+    	{
+    		square=new Square(Shape.getMaxHeight()/2);
+    	}
+    	else if(direction ==2)
+    	{
+    		square=new Square(0);
+    	}
     	level.getShapes().add(square);
     	//animate.setSquare(square);
-    	animateList.add(new Animate(cv,square));
+    	animateList.add(new Animate(cv,square,direction));
  	    Thread animateThread = new Thread(animateList.get(animateList.size()-1));
  	    
  	    animateThread.start();
@@ -153,8 +161,9 @@ public class Game
     public void gameOver()
     {
     	//stop running threads
-    	closeThreads();
     	sc.setRun(false);
+    	closeThreads();
+    	
     	
     	//start game over activity
     	Intent gameOver = new Intent(cv.getContext(),GameOverActivity.class);

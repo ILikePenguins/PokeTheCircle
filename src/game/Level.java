@@ -27,6 +27,12 @@ public class Level
 		
 		this.num_circles=num_circles;
 		this.num_squares=num_squares;
+		
+    	//get screen size of device
+    	DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+	    Shape.setMaxHeight(metrics.heightPixels);
+        Shape.setMaxWidth(metrics.widthPixels);
+        
 		shapes= new ArrayList<Shape>();
 		initShapeList();
 	}
@@ -50,10 +56,7 @@ public class Level
 	
 	public void initShapeList()
     {
-    	//get screen size of device
-    	DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
-	    Shape.setMaxHeight(metrics.heightPixels);
-        Shape.setMaxWidth(metrics.widthPixels);
+		shapes.clear();
         //initialize circles
     	for(int i=0;i<num_circles;i++)
     	{

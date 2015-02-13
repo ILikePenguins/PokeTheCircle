@@ -24,21 +24,22 @@ public class Animate implements Runnable
 	//0 horizontal
 	//1 vertical
 	//2 diagonal
-	public Animate(CircleView cv, Square square)
+	public Animate(CircleView cv, Square square,int direction)
 	
 	{
 		 this.cv=cv;
 		 this.square=square;
+		 this.direction=direction;
 		 endx=Shape.getMaxWidth()-35;
 		 endy=Shape.getMaxWidth();
 		 
 		
-		 square.setX1(0);
-		 square.setY1(55);
+		 //square.setX1(0);
+		 //square.setY1(55);
 		 forward=true;
 		 run=true;
 		 
-		 direction=0;
+		 
 	}
 	
 public Animate(CircleView cv)
@@ -78,20 +79,24 @@ public void setDirection(int direction) {
 	public void moveForwad()
 	{
 		//System.out.println("x1: " +square.getX1()+" end:"+endx);
-		while(square.getX1()<endx)
+		while(square.getX1()<endx &&run)
 		{
 			//System.out.println("forward");
 			switch(direction)
 			{
 				case 0:
 					square.setX1(square.getX1()+10);
-					square.setY1(square.getY1()+10);
+					square.setX2(square.getX2()+10);
 					break;
 				case 1:
+					square.setY1(square.getY1()+10);
+					square.setY2(square.getY2()+10);
 					break;
 				case 2:
 					square.setX1(square.getX1()+10);
-					square.setY1(square.getY2()+10);
+					square.setY1(square.getY1()+10);
+					square.setX2(square.getX2()+10);
+					square.setY2(square.getY2()+10);
 					break;
 			}
 			
@@ -105,20 +110,24 @@ public void setDirection(int direction) {
 	
 	public void moveBack()
 	{
-		while(square.getX1()>0)
+		while(square.getX1()>0 && run)
 		{
 			//System.out.println("back");
 			switch(direction)
 			{
 				case 0:
 					square.setX1(square.getX1()-10);
-					square.setY1(square.getY1()-10);
+					square.setX2(square.getX2()-10);
 					break;
 				case 1:
+					square.setY1(square.getY1()-10);
+					square.setY2(square.getY2()-10);
 					break;
 				case 2:
 					square.setX1(square.getX1()-10);
-					square.setY1(square.getY2()-10);
+					square.setY1(square.getY1()-10);
+					square.setX2(square.getX2()-10);
+					square.setY2(square.getY2()-10);
 					break;
 			}
 			

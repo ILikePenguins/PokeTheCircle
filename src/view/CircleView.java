@@ -2,23 +2,17 @@ package view;
 
 import game.Game;
 
-import java.util.ArrayList;
-
-
 import shape.Circle;
 import shape.Shape;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class CircleView extends View  
 {
-	//private ArrayList<Shape> shapes= new ArrayList<Shape>();
 	private Game game;
 
 	public CircleView(Context context)
@@ -37,19 +31,6 @@ public class CircleView extends View
 			return game;
 	 }
     
-    public void initCircleList(int x)
-    {
-    	//get screen size of device
-    	DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
-	    Shape.setMaxHeight(metrics.heightPixels);
-        Shape.setMaxWidth(metrics.widthPixels);
-        //initialize circles
-//    	for(int i=0;i<x;i++)
-//    	{
-//    		shapes.add(new Circle());
-//    	}
-    }
-
     protected void onDraw(Canvas canvas) 
     {
       super.onDraw(canvas);
