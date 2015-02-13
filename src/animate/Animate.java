@@ -18,20 +18,27 @@ public class Animate implements Runnable
 
 	private boolean forward;
 	private boolean run;
+	private int direction;
 	
 
+	//0 horizontal
+	//1 vertical
+	//2 diagonal
 	public Animate(CircleView cv, Square square)
 	
 	{
 		 this.cv=cv;
+		 this.square=square;
 		 endx=Shape.getMaxWidth()-35;
 		 endy=Shape.getMaxWidth();
 		 
-		 this.square=square;
+		
 		 square.setX1(0);
 		 square.setY1(55);
 		 forward=true;
 		 run=true;
+		 
+		 direction=0;
 	}
 	
 public Animate(CircleView cv)
@@ -41,6 +48,9 @@ public Animate(CircleView cv)
 		 run=true;
 		 forward=true;
 	}
+public void setDirection(int direction) {
+	this.direction = direction;
+}
 	
 	public Square getSquare() {
 		return square;
@@ -71,8 +81,21 @@ public Animate(CircleView cv)
 		while(square.getX1()<endx)
 		{
 			//System.out.println("forward");
-			square.setX1(square.getX1()+10);
-			square.setY1(square.getY1()+10);
+			switch(direction)
+			{
+				case 0:
+					square.setX1(square.getX1()+10);
+					square.setY1(square.getY1()+10);
+					break;
+				case 1:
+					break;
+				case 2:
+					square.setX1(square.getX1()+10);
+					square.setY1(square.getY2()+10);
+					break;
+			}
+			
+			
 			cv.getGame().setShrink(false);
 			cv.postInvalidate();
 			SystemClock.sleep(100);
@@ -85,14 +108,28 @@ public Animate(CircleView cv)
 		while(square.getX1()>0)
 		{
 			//System.out.println("back");
-			square.setX1(square.getX1()-10);
-			square.setY1(square.getY1()-10);
+			switch(direction)
+			{
+				case 0:
+					square.setX1(square.getX1()-10);
+					square.setY1(square.getY1()-10);
+					break;
+				case 1:
+					break;
+				case 2:
+					square.setX1(square.getX1()-10);
+					square.setY1(square.getY2()-10);
+					break;
+			}
+			
 			cv.getGame().setShrink(false);
 			cv.postInvalidate();
 			SystemClock.sleep(100);
 			forward=true;
 		}
 	}
+	
+	
 
 	public void run() 
 	{

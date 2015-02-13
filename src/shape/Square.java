@@ -10,12 +10,30 @@ public class Square extends Shape
 	private float x1;
 	private float y1;
 	private int length;
-	
+	private float y2;
+	private float x2;
+
+
+
 	public Square()
 	{
 		length=35;
 		randomCoordinates();
 		type=2;
+	}
+	public float getX2() {
+		return x2;
+	}
+
+	public void setX2(float x2) {
+		this.x2 = x2;
+	}
+	public float getY2() {
+		return y2;
+	}
+
+	public void setY2(float y2) {
+		this.y2 = y2;
 	}
 	
 	public void setX1(float x1) {
@@ -34,6 +52,8 @@ public class Square extends Shape
 	{
 		x1=(int) (Math.random() * ( (maxWidth- (length*4)) )) + length*2;
 		y1=x1+length;
+		y2=y1;
+		x2=x1;
 	}
 	
 	public float getX1() {
@@ -48,13 +68,12 @@ public class Square extends Shape
 	public boolean isPoked(float x, float y)
 	{
 		if( (x>=x1 && x<=(x1+length)) && (y>=(y1-length) &&y<=y1) )
+		//if( (x>=x1 && x<=(x2)) && (y>=(y2) &&y<=y1) )
 		{
 			return true;
 		}
 		return false;
 	}
-	
-
 	
 	public void draw(Canvas canvas)
 	{

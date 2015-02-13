@@ -15,13 +15,19 @@ public class Level
 	private static int num_level=1;
 	private int num_circles;
 	private int num_squares;
-	private ArrayList<Shape> shapes= new ArrayList<Shape>();
+	private ArrayList<Shape> shapes;
 	
+	public Level()
+	{
+		
+	}
 
 	public Level(int num_circles, int num_squares)
 	{
+		
 		this.num_circles=num_circles;
 		this.num_squares=num_squares;
+		shapes= new ArrayList<Shape>();
 		initShapeList();
 	}
 	
@@ -60,7 +66,7 @@ public class Level
 
     }
 	
-	public void nextLevel()
+	public void levelUp()
 	{
 		num_level++;
 		switch(num_level)

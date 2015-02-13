@@ -24,15 +24,20 @@ public class Game
 	private ShrinkCircles sc;
 	private Animate animate;
 	private Level level;
+	private ArrayList<Animate> animateList;
 	
 	public Game(CircleView cv)
 	{
 		this.cv=cv;
 		shrink=true;
 		sc=new ShrinkCircles(cv);
+		animateList=new ArrayList<Animate>();
+		
+	   // animate=new Animate(cv);
+	    level=new Level(3,0);
+	    
 	    Thread shrinkThread = new Thread(sc);
 	    shrinkThread.start();
-	    animate=new Animate(cv);
 	}
 	public Level getLevel() {
 		return level;
@@ -100,13 +105,19 @@ public class Game
     			
     			if(score==30)
     			{
-    				//move square back and forth
-    		    	Square square=new Square();
-    		    	shapes.add(square);
-    		    	animate.setSquare(square);
-    		 	    Thread animateThread = new Thread(animate);
-    		 	    animateThread.start();
+    				addSquare();
+//    				//move square back and forth
+//    		    	Square square=new Square();
+//    		    	shapes.add(square);
+//    		    	animate.setSquare(square);
+//    		 	    Thread animateThread = new Thread(animate);
+//    		 	    animateThread.start();
     			}
+    			if(score==35)
+    			{
+    				addSquare();
+    			}
+    			
     			//redraw
     			cv.postInvalidate();
     			shrink=true;
@@ -116,11 +127,33 @@ public class Game
 		return shapes;
     }
     
+    public void addSquare()
+    {
+    	//move square back and forth
+    	Square square=new Square();
+    	level.getShapes().add(square);
+    	//animate.setSquare(square);
+    	animateList.add(new Animate(cv,square));
+ 	    Thread animateThread = new Thread(animateList.get(animateList.size()-1));
+ 	    
+ 	    animateThread.start();
+    }
+    
+    public void closeThreads()
+    {
+    	if(animateList.size()>0)
+    	{
+    		for(Animate a: animateList)
+    		{
+    			a.setRun(false);
+    		}
+    	}
+    }
+    
     public void gameOver()
     {
     	//stop running threads
-    	if(animate.isRun())
-    		animate.setRun(false);
+    	closeThreads();
     	sc.setRun(false);
     	
     	//start game over activity

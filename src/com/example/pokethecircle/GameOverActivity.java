@@ -48,7 +48,6 @@ public class GameOverActivity extends Activity
 	    	//return to homescreen
 	    	Intent homeIntent = new Intent(GameOverActivity.this,StartActivity.class);
 	      	startActivity(homeIntent);
-	    	
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}

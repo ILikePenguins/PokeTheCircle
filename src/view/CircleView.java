@@ -18,7 +18,7 @@ import android.view.View;
 
 public class CircleView extends View  
 {
-	private ArrayList<Shape> shapes= new ArrayList<Shape>();
+	//private ArrayList<Shape> shapes= new ArrayList<Shape>();
 	private Game game;
 
 	public CircleView(Context context)
@@ -28,7 +28,7 @@ public class CircleView extends View
          //bkg color
          setBackgroundColor(Color.BLACK);
         
-         initCircleList(3);
+       //  initCircleList(3);
          setOnTouchListener(new TouchListener());
     }
 	
@@ -44,19 +44,19 @@ public class CircleView extends View
 	    Shape.setMaxHeight(metrics.heightPixels);
         Shape.setMaxWidth(metrics.widthPixels);
         //initialize circles
-    	for(int i=0;i<x;i++)
-    	{
-    		shapes.add(new Circle());
-    	}
+//    	for(int i=0;i<x;i++)
+//    	{
+//    		shapes.add(new Circle());
+//    	}
     }
 
     protected void onDraw(Canvas canvas) 
     {
       super.onDraw(canvas);
 
-      if(shapes.size()>0)
+      if(game.getLevel().getShapes().size()>0)
       {  
-	      for(Shape s :shapes)
+	      for(Shape s :game.getLevel().getShapes())
 	      {
 	    	  if(s instanceof  Circle)
 	    	  {
@@ -103,7 +103,7 @@ public class CircleView extends View
 				    case MotionEvent.ACTION_POINTER_DOWN: //2nd finger
 				    {
 				    	//check if a shape was poked
-				      shapes=game.poked(me.getX(pointerIndex),me.getY(pointerIndex),shapes);
+				     game.getLevel().setShapes(game.poked(me.getX(pointerIndex),me.getY(pointerIndex),game.getLevel().getShapes()));
 				      break;
 				    }
 				    case MotionEvent.ACTION_UP:
@@ -120,8 +120,7 @@ public class CircleView extends View
 	    {
 	    	//stop running threads
 	    	game.getSc().setRun(false);
-	    	if(game.getAnimate().isRun())
-	    		game.getAnimate().setRun(false);
+	    	game.closeThreads();
 	    	
 	    }
 	    return super.onKeyDown(keyCode, event);
