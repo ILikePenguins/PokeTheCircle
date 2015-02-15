@@ -12,13 +12,8 @@ public class Circle extends Shape
 	private float x2;
 	private float y1;
 	private float y2;
-<<<<<<< HEAD
 	static int minSize=85;
 	static int maxSize=120;
-=======
-	static int minSize=60;
-	static int maxSize=90;
->>>>>>> parent of df39c32... fixed square for real
 	private float radius;
 
 	public Circle()

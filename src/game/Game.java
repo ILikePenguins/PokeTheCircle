@@ -25,7 +25,7 @@ public class Game
 	private Animate animate;
 	private Level level;
 	private ArrayList<Animate> animateList;
-	
+	private ArrayList<Integer> positions;
 	public Game(CircleView cv)
 	{
 		this.cv=cv;
@@ -69,10 +69,10 @@ public class Game
 	}
     public ArrayList<Shape> poked(float x, float y, ArrayList<Shape> shapes)
     {
-    	  sound= new Sound(cv.getContext());
-    	for(Shape s: shapes)
+    	for(int i=shapes.size()-1;i>-1;i--)
+    	//for(Shape s: shapes)
     	{
-    		if(s.getType()==2 && s.isPoked(x, y)  )
+    		if(shapes.get(i).getType()==2 && shapes.get(i).isPoked(x,y))
     		{
     			System.out.println("poked a square");
     			gameOver();
@@ -80,13 +80,14 @@ public class Game
     		
     		//ensure its a circle getting poked
 
-    		if( s.getType()==1&& s.isPoked(x,y))
+    		if( shapes.get(i).getType()==1 && shapes.get(i).isPoked(x,y))
     		{
     			//playsound if its loaded
+    			sound= new Sound(cv.getContext());
     			sound.isLoaded();
     			     
     			//remove the clicked circle, and add a new one
-    			shapes.remove(s);
+    			shapes.remove(shapes.get(i));
     			shapes.add(0,new Circle());
     			//turn off shrinking of circles
     			shrink=false;
@@ -100,7 +101,7 @@ public class Game
     			if(score%22==0)
     			{
     				//add another circle to the game
-    				shapes.add(new Circle());
+    				shapes.add(0,new Circle());
     			}
     			
     			if(score==35)
@@ -137,6 +138,7 @@ public class Game
     	Square square=new Square(start_pos);
     	
     	level.getShapes().add(square);
+    //	positions.add(level.getShapes().size()-1);
     	//animate.setSquare(square);
     	animateList.add(new Animate(cv,square,direction));
  	    Thread animateThread = new Thread(animateList.get(animateList.size()-1));

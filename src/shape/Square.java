@@ -10,8 +10,12 @@ public class Square extends Shape
 	private float x1;
 	private float y1;
 	private int length;
+	
 	private float y2;
 	private float x2;
+	public int getLength() {
+		return length;
+	}
 
 	public Square()
 	{
