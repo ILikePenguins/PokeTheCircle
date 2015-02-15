@@ -1,6 +1,5 @@
-package animate;
+package view;
 
-import view.CircleView;
 import android.os.SystemClock;
 
 public class ShrinkCircles implements Runnable
@@ -26,7 +25,7 @@ public class ShrinkCircles implements Runnable
 	}
 	public void setSleepTime(int sleepTime)
 	{
-		if(sleepTime>400)
+		if(sleepTime>200)
 			this.sleepTime = sleepTime;
 	}
 	

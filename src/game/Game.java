@@ -69,7 +69,7 @@ public class Game
 	}
     public ArrayList<Shape> poked(float x, float y, ArrayList<Shape> shapes)
     {
-    	
+    	  sound= new Sound(cv.getContext());
     	for(Shape s: shapes)
     	{
     		if(s.getType()==2 && s.isPoked(x, y)  )
@@ -82,9 +82,7 @@ public class Game
 
     		if( s.getType()==1&& s.isPoked(x,y))
     		{
-    			
     			//playsound if its loaded
-    			sound= new Sound(cv.getContext());
     			sound.isLoaded();
     			     
     			//remove the clicked circle, and add a new one
@@ -94,7 +92,7 @@ public class Game
     			shrink=false;
     			score++;
     			
-    			if(score%20==0)
+    			if(score%15==0)
     			{
     				//make circles shrink faster
     				sc.setSleepTime(sc.getSleepTime()-100);
@@ -102,7 +100,7 @@ public class Game
     			if(score%22==0)
     			{
     				//add another circle to the game
-    				shapes.add(0,new Circle());
+    				shapes.add(new Circle());
     			}
     			
     			if(score==35)
