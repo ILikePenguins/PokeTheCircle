@@ -47,7 +47,7 @@ public class CircleView extends View
 	    	  //draw shapes
 	    	  s.draw(canvas);
 	      } 
-	      game.setShrink(true);
+	     // game.setShrink(true);
       }
    }
    

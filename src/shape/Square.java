@@ -16,7 +16,7 @@ public class Square extends Shape
 
 	public Square()
 	{
-		length=80;
+		length=120;
 		randomCoordinates();
 		type=2;
 	}
@@ -24,7 +24,7 @@ public class Square extends Shape
 	public Square(int x1)
 	{
 		this.x1=x1;
-		length=80;
+		length=120;
 		coordinates();
 		type=2;
 	}
@@ -93,7 +93,7 @@ public class Square extends Shape
 		if( (x>=x1 && x<=(x2)) && (y>=(y1) &&y<=y2) )
 		
 		{
-			System.out.println("poked square");
+			//System.out.println("poked square");
 			return true;
 		}
 		return false;
@@ -104,6 +104,7 @@ public class Square extends Shape
 		paint.setColor(Color.WHITE);
 		//canvas.drawRect(x1,x1,y1,y1,paint);
 		canvas.drawRect(x1,y1,x2,y2,paint);
+		
 		//left, top, right, bottom
 		//canvas.drawRect(20,30,40,50,paint);
 		//System.out.println("coords:"+x1+","+y1);

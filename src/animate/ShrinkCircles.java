@@ -35,7 +35,7 @@ public class ShrinkCircles implements Runnable
 		while(run)
 		{
 			//System.out.println("invalidated");
-			//cv.setShrink(true);
+			//cv.getGame().setShrink(true);
 			cv.postInvalidate();
 			SystemClock.sleep(sleepTime);
 			

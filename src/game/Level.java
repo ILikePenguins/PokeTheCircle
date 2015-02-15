@@ -69,16 +69,24 @@ public class Level
 
     }
 	
+	public void pause()
+	{
+		// make pop up for new level
+	}
+	
 	public void levelUp()
 	{
 		num_level++;
+		pause();
 		switch(num_level)
 		{
 			case 2:// new circle added
+				num_circles++;
 				break;
 			case 3: //speed up shrinking
 				break;
 			case 4: //new circle added
+				num_circles++;
 				break;
 			case 5: //non moving square
 				break;
@@ -87,9 +95,10 @@ public class Level
 			case 7: //square moves
 				break;
 			case 8: // more circles
+				num_circles++;
 				break;
-			
 		}
+		initShapeList();
 	}
 
 }

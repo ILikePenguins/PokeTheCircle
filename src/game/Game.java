@@ -69,7 +69,7 @@ public class Game
 	}
     public ArrayList<Shape> poked(float x, float y, ArrayList<Shape> shapes)
     {
-    	  sound= new Sound(cv.getContext());
+    	
     	for(Shape s: shapes)
     	{
     		if(s.getType()==2 && s.isPoked(x, y)  )
@@ -82,40 +82,46 @@ public class Game
 
     		if( s.getType()==1&& s.isPoked(x,y))
     		{
+    			
     			//playsound if its loaded
+    			sound= new Sound(cv.getContext());
     			sound.isLoaded();
     			     
     			//remove the clicked circle, and add a new one
     			shapes.remove(s);
-    			shapes.add(new Circle());
+    			shapes.add(0,new Circle());
     			//turn off shrinking of circles
     			shrink=false;
     			score++;
     			
-    			if(score%15==0)
+    			if(score%20==0)
     			{
     				//make circles shrink faster
     				sc.setSleepTime(sc.getSleepTime()-100);
     			}
-    			if(score%25==0)
+    			if(score%22==0)
     			{
     				//add another circle to the game
-    				shapes.add(new Circle());
+    				shapes.add(0,new Circle());
     			}
     			
     			if(score==35)
     			{
-    				addSquare(0);
+    				addSquare(0,Shape.getMaxHeight()/2);
 
     			}
     			if(score==70)
     			{
-    				addSquare(1);
+    				addSquare(1,Shape.getMaxHeight()/2);
     			}
     			
     			if(score==90)
     			{
-    				addSquare(2);
+    				addSquare(2,0);
+    			}
+    			if(score==100)
+    			{
+    				animate.setIncrement(20);
     			}
     			
     			//redraw
@@ -127,18 +133,11 @@ public class Game
 		return shapes;
     }
     
-    public void addSquare(int direction)
+    public void addSquare(int direction, int start_pos)
     {
     	//move square back and forth
-    	Square square=null;
-    	if(direction==0 || direction ==1 )
-    	{
-    		square=new Square(Shape.getMaxHeight()/2);
-    	}
-    	else if(direction ==2)
-    	{
-    		square=new Square(0);
-    	}
+    	Square square=new Square(start_pos);
+    	
     	level.getShapes().add(square);
     	//animate.setSquare(square);
     	animateList.add(new Animate(cv,square,direction));

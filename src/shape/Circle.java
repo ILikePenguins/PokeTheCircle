@@ -12,10 +12,10 @@ public class Circle extends Shape
 	private float x2;
 	private float y1;
 	private float y2;
-	static int minSize=60;
-	static int maxSize=75;
+	static int minSize=85;
+	static int maxSize=120;
 	private float radius;
-	
+
 	public Circle()
 	{
 		id = nextId.incrementAndGet();
@@ -30,6 +30,7 @@ public class Circle extends Shape
 		randomY();
 		
 	}
+
 
 	public void setRandomRadius()
 	{
@@ -60,7 +61,7 @@ public class Circle extends Shape
 		this.centerX = centerX;
 	}
 	
-	public void setCenterY(int centerY) {
+	public void setCenterY(int centerY) { 
 		this.centerY = centerY;
 	}
 
@@ -86,6 +87,7 @@ public class Circle extends Shape
 	public void draw(Canvas canvas)
 	{
 		paint.setColor(getColor());
+
 		canvas.drawCircle(centerX,
 				centerY,
 				radius, paint);

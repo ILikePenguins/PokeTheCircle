@@ -43,7 +43,7 @@ public class HighScore
 		// Restore preferences
 		//System.out.println("get");
 		high_score= settings.getInt("score", 0);
-		System.out.println("got score: "+ high_score);
+		//System.out.println("got score: "+ high_score);
 		
 	}
 }
