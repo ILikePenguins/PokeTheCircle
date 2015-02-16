@@ -20,16 +20,16 @@ public class Game
 	private Sound sound;
 	private int score;
 	private CircleView cv;
-	private boolean shrink;
+	//private boolean shrink;
 	private ShrinkCircles sc;
 	private Animate animate;
 	private Level level;
 	private ArrayList<Animate> animateList;
 	private ArrayList<Integer> positions;
+	
 	public Game(CircleView cv)
 	{
 		this.cv=cv;
-		shrink=true;
 		sc=new ShrinkCircles(cv);
 		animateList=new ArrayList<Animate>();
 		
@@ -56,12 +56,6 @@ public class Game
 	}
 	public void setScore(int score) {
 		this.score = score;
-	}
-	public boolean isShrink() {
-		return shrink;
-	}
-	public void setShrink(boolean shrink) {
-		this.shrink = shrink;
 	}
 	
 	public ShrinkCircles getSc() {
@@ -90,7 +84,7 @@ public class Game
     			shapes.remove(shapes.get(i));
     			shapes.add(0,new Circle());
     			//turn off shrinking of circles
-    			shrink=false;
+    			
     			score++;
     			
     			if(score%15==0)
@@ -98,7 +92,7 @@ public class Game
     				//make circles shrink faster
     				sc.setSleepTime(sc.getSleepTime()-100);
     			}
-    			if(score%22==0)
+    			if(score==22)
     			{
     				//add another circle to the game
     				shapes.add(0,new Circle());
@@ -107,25 +101,35 @@ public class Game
     			if(score==35)
     			{
     				addSquare(0,Shape.getMaxHeight()/2);
-
+    				
+    			}
+    			if(score%50==0)
+    			{
+    				shapes.add(0,new Circle());
     			}
     			if(score==70)
     			{
     				addSquare(1,Shape.getMaxHeight()/2);
+    			}
+    			if(score==80)
+    			{
+    				shapes.add(0,new Circle());
     			}
     			
     			if(score==90)
     			{
     				addSquare(2,0);
     			}
-    			if(score==100)
+    		
+    			if(score==150)
     			{
-    				animate.setIncrement(20);
+    				addSquare(2,Shape.getMaxHeight());
     			}
     			
     			//redraw
+    			sc.setShrink(false);
     			cv.postInvalidate();
-    			shrink=true;
+    			//shrink=true;
     			return shapes;
     		}
     	}

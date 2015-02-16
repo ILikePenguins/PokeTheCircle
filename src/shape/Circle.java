@@ -12,8 +12,8 @@ public class Circle extends Shape
 	private float x2;
 	private float y1;
 	private float y2;
-	static int minSize=85;
-	static int maxSize=120;
+	static int minSize=60;
+	static int maxSize=90;
 	private float radius;
 
 	public Circle()

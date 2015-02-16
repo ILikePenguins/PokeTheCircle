@@ -9,13 +9,19 @@ public class ShrinkCircles implements Runnable
 	private CircleView cv;
 	private boolean run;
 	private int sleepTime;
-	
+	private boolean shrink;
 
+	public boolean isShrink() {
+		return shrink;
+	}
+	public void setShrink(boolean shrink) {
+		this.shrink = shrink;
+	}
 	public ShrinkCircles(CircleView cv)
 	{
 		this.cv=cv;
 		run=true;
-		sleepTime=950;
+		sleepTime=1000;
 	}
 	public void setRun(boolean run)
 	{
@@ -26,7 +32,7 @@ public class ShrinkCircles implements Runnable
 	}
 	public void setSleepTime(int sleepTime)
 	{
-		if(sleepTime>400)
+		if(sleepTime>200)
 			this.sleepTime = sleepTime;
 	}
 	
@@ -35,7 +41,7 @@ public class ShrinkCircles implements Runnable
 		while(run)
 		{
 			//System.out.println("invalidated");
-			//cv.getGame().setShrink(true);
+			shrink=true;
 			cv.postInvalidate();
 			SystemClock.sleep(sleepTime);
 			

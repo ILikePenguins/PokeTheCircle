@@ -19,7 +19,7 @@ public class Animate implements Runnable
 	private boolean forward;
 	private boolean run;
 	private int direction;
-	private int increment;
+	static int increment=10;
 
 
 
@@ -34,7 +34,7 @@ public class Animate implements Runnable
 		 this.direction=direction;
 		 endx=Shape.getMaxWidth()-35;
 		 endy=Shape.getMaxWidth();
-		 increment=10;
+		 //increment=10;
 		
 		 //square.setX1(0);
 		 //square.setY1(55);
@@ -52,7 +52,7 @@ public Animate(CircleView cv)
 		 forward=true;
 	}
 public void setIncrement(int increment) {
-	this.increment = increment;
+	Animate.increment = increment;
 }
 
 	public void setDirection(int direction) {
@@ -115,11 +115,15 @@ public void setIncrement(int increment) {
 					break;
 			}
 			
-			
-			cv.getGame().setShrink(false);
-			cv.postInvalidate();
-			SystemClock.sleep(100);
+			if(direction==0)
+			{
+				cv.getGame().getSc().setShrink(false);
+				cv.postInvalidate();
+				
+				
+			}
 			forward=false;
+			SystemClock.sleep(100);
 		}
 	}
 	
@@ -152,10 +156,13 @@ public void setIncrement(int increment) {
 					break;
 			}
 			
-			cv.getGame().setShrink(false);
-			cv.postInvalidate();
-			SystemClock.sleep(100);
+			if(direction==0)
+			{
+				cv.getGame().getSc().setShrink(false);
+				cv.postInvalidate();
+			}
 			forward=true;
+			SystemClock.sleep(100);
 		}
 	}
 	

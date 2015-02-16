@@ -14,22 +14,27 @@ import android.view.View;
 public class CircleView extends View  
 {
 	private Game game;
+	//private boolean shrink;
+
 
 	public CircleView(Context context)
     {
          super(context);
-         game=new Game(this);
+         
          //bkg color
          setBackgroundColor(Color.BLACK);
         
        //  initCircleList(3);
          setOnTouchListener(new TouchListener());
+         game=new Game(this);
     }
 	
 	 public Game getGame() 
 	 {
 			return game;
 	 }
+	 
+
     
     protected void onDraw(Canvas canvas) 
     {
@@ -47,7 +52,7 @@ public class CircleView extends View
 	    	  //draw shapes
 	    	  s.draw(canvas);
 	      } 
-	      game.setShrink(true);
+	      game.getSc().setShrink(true);
       }
    }
    
@@ -59,7 +64,7 @@ public class CircleView extends View
      	  System.out.println("gameover");
      	  game.gameOver();
  	  }
- 	  else if(game.isShrink())
+ 	  else if(game.getSc().isShrink())
 	    	  c.setRadius((float) (c.getRadius()*c.getShrinkFactor()));
 
    }
