@@ -1,6 +1,7 @@
 package sound;
 
-import com.example.pokethecircle.R;
+
+import com.potatoes.pokethecircle.R;
 
 import android.content.Context;
 import android.media.AudioManager;

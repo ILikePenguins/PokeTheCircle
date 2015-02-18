@@ -9,7 +9,7 @@ public class Square extends Shape
 
 	private float x1;
 	private float y1;
-	private int length;
+	static int length;
 	
 	private float y2;
 	private float x2;
@@ -55,7 +55,7 @@ public class Square extends Shape
 	}
 	
 	public void setLength(int length) {
-		this.length = length;
+		Square.length = length;
 	}
 
 	public void randomCoordinates()

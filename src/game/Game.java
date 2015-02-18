@@ -6,7 +6,7 @@ import android.content.Intent;
 import animate.Animate;
 import animate.ShrinkCircles;
 
-import com.example.pokethecircle.GameOverActivity;
+import com.potatoes.pokethecircle.GameOverActivity;
 
 
 import shape.Circle;
@@ -25,7 +25,6 @@ public class Game
 	private Animate animate;
 	private Level level;
 	private ArrayList<Animate> animateList;
-	private ArrayList<Integer> positions;
 	
 	public Game(CircleView cv)
 	{
@@ -126,6 +125,8 @@ public class Game
     				addSquare(2,Shape.getMaxHeight());
     			}
     			
+    			
+    			
     			//redraw
     			sc.setShrink(false);
     			cv.postInvalidate();
@@ -140,7 +141,7 @@ public class Game
     {
     	//move square back and forth
     	Square square=new Square(start_pos);
-    	
+    	square.setLength(square.getLength()+20);
     	level.getShapes().add(square);
     //	positions.add(level.getShapes().size()-1);
     	//animate.setSquare(square);
