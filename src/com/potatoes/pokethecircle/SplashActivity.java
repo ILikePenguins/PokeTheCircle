@@ -1,5 +1,7 @@
 package com.potatoes.pokethecircle;
 
+import java.util.HashMap;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -11,50 +13,68 @@ import android.support.v7.app.ActionBarActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
 public class SplashActivity extends ActionBarActivity 
 {
 	private InterstitialAd interstitial;
 	boolean ready=false;
+	
+	// The following line should be changed to include the correct property id.
+	private static final String PROPERTY_ID = "UA-59844251-2";
+
+	//Logging TAG
+	private static final String TAG = "MyApp";
+
+	public static int GENERAL_TRACKER = 0;
+
+	public enum TrackerName 
+	{
+		APP_TRACKER, // Tracker used only in this app.
+		GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
+		ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
+	}
+	HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
     protected void onCreate(Bundle savedInstanceState)
     {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash_screen);
 		
+
 		if(isNetworkAvailable(getApplicationContext()))
 			interstitialAds();
-		new Handler().postDelayed(new Runnable() {
+		setContentView(R.layout.splash_screen);
+		
+		
+		new Handler().postDelayed(new Runnable() 
+		{
 		    public void run() 
 		    {
+		    	
 		    	  Intent startActivity = new Intent(SplashActivity.this, StartActivity.class);
 		          startActivity(startActivity);
 		    }
-		}, 3000);
-     	}
+		}, 3500);
+	
+     }
     
-    public class Watch implements Runnable
+    protected void onStart()
     {
-    	
-    	long start= System.currentTimeMillis();
-    	SplashActivity activity;
-    	public Watch(SplashActivity activity)
-    	{
-    		this.activity=activity;
+    	 super.onStart();
+    	 
+    	//Get a Tracker (should auto-report)
+    		//((SplashActivity) getApplicationContext()).getTracker(SplashActivity.TrackerName.APP_TRACKER);
+ 		getTracker(SplashActivity.TrackerName.APP_TRACKER);
     		
-    	}
-		public void run() 
-		{
-			System.out.println("start");
-			while(System.currentTimeMillis()-start<10000)
-			{
-				//System.out.println(System.currentTimeMillis()-start);
-			}
-			System.out.println("end");
-			ready=true;
-		}
-    	
     }
     
+    protected void onStop()
+    {
+    	super.onStop();
+    	//Stop the analytics tracking
+    	GoogleAnalytics.getInstance(this).reportActivityStop(this);
+
+    }
     public void interstitialAds()
     {
         
@@ -96,6 +116,8 @@ public class SplashActivity extends ActionBarActivity
 		
 	}
 	
+	
+	
     private static boolean isNetworkAvailable(Context  context) 
     {
         ConnectivityManager connectivityManager 
@@ -104,10 +126,21 @@ public class SplashActivity extends ActionBarActivity
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
     
-    public void start()
+ 
+    synchronized Tracker getTracker(TrackerName trackerId) 
     {
+    	if (!mTrackers.containsKey(trackerId)) 
+    	{
+    	GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+    	Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(R.xml.app_tracker)
+    	: (trackerId == TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(PROPERTY_ID)
+    	: analytics.newTracker(R.xml.global_tracker);
     	
+    	mTrackers.put(trackerId, t);
+    	}
+    	return mTrackers.get(trackerId);
     }
+    
     
   
 //    public static boolean hasActiveInternetConnection(Context context) 

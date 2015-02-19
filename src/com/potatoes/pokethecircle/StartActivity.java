@@ -8,9 +8,8 @@ import com.google.android.gms.ads.InterstitialAd;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -47,6 +46,10 @@ public class StartActivity extends Activity
 	    		  Intent howToIntent = new Intent(StartActivity.this,HowToPlayActivity.class);
 	  	      	  startActivity(howToIntent);
 	    	    }
+	    }
+	    
+	    public void onBackPressed() 
+	    {
 	    }
 	    
 	
